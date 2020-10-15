@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+    - "3306:3306"
+    volumes:
+    - ${MYSQL_VOLUME:-mysql-volume}:/var/lib/mysql:Z
+    environment:
+    - MYSQL_USER=lhc
+    - MYSQL_PASSWORD=lhc
+    - MYSQL_RANDOM_ROOT_PASSWORD=true
+    - MYSQL_DATABASE=lhc
+
+  livehelperchat:
+    image: cthulhu666/docker-livehelperchat
+    depends_on:
+    - mysql
+    ports:
+    - "80:80"
+
+volumes:
+    mysql-volume:
